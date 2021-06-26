@@ -18,7 +18,7 @@
 
 ### test users
 
-- stephanpetersen@bluewin.ch
+- youremail@yourprovider.ch
 
 - siteart@feritel.swiss
 
@@ -54,3 +54,11 @@ use Illuminate\Support\Facades\DB;
 ## count tableitems by index
 
 - {{ $categories->firstItem()+$loop->index }}
+
+- count items in blade without index @php($i 0 1) return view with {{ $i++ }}
+
+## relate different tables 
+
+- Eloquent "return $this->hasOne(User::class, 'id', 'user_id');" in Category Model
+
+- then you can access it in blade with {{$category->user->name}}
