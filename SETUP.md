@@ -59,6 +59,36 @@ use Illuminate\Support\Facades\DB;
 
 ## relate different tables 
 
-- Eloquent "return $this->hasOne(User::class, 'id', 'user_id');" in Category Model
+- Eloquent: "return $this->hasOne(User::class, 'id', 'user_id');" in Category Model
 
 - then you can access it in blade with {{$category->user->name}}
+
+- Querybuilder: 
+
+```PHP
+    $categories = DB::table('categories)
+                  ->join('users', 'categories.user_id', 'users.id')
+                  ->select('categories.*', 'user.name')
+                  ->latest()->paginate(5);
+```
+- in blade access it with {{ $category->name }}
+
+## display images
+
+// you want to put the style into an external file
+```HTML
+<img src="{{ asset($brand->brand_image) }}"style="height:3rem; with:4rem;" alt="{{$brand->brand_name}}">
+```
+
+## Laravel Image Intervention
+
+[Intervention Image](http://image.intervention.io/)
+
+## Enable Profilephoto update with jetstream or change setings in jetstream.php
+
+```PHP
+php artisan storage:link
+```
+- set a link to storage folder where profile photo is located storage/app/public/profile-photos/
+
+- change APP_URL in .env to http://127.0.0.1:XXXX->(port you use) to let laravel find the photo
