@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandsController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AboutController;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 /*
@@ -21,7 +23,9 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 
 Route::get('/', function () {
-    return view('welcome');
+    $brands = DB::table('brands')->get();
+    $abouts = DB::table('home_abouts')->latest()->first();
+    return view('home', compact('brands', 'abouts'));
 });
 
 Route::get('/home', function () {
@@ -67,6 +71,21 @@ Route::get('/multi/image',  [BrandsController::class, 'Multipic'])->name('multi.
 // POST
 Route::post('/multi/add',  [BrandsController::class, 'StoreImage'])->name('store.image');
 
+// admin routes
+Route::get('/home/slider',  [HomeController::class, 'HomeSlider'])->name('home.slider');
+Route::get('/add/slider',  [HomeController::class, 'AddSlider'])->name('add.slider');
+Route::post('/store/slider',  [HomeController::class, 'StoreSlider'])->name('store.slider');
+
+
+// home about routes
+Route::get('/home/about',  [AboutController::class, 'HomeAbout'])->name('home.about');
+Route::get('/add/about',  [AboutController::class, 'AddAbout'])->name('add.about');
+Route::post('/store/about',  [AboutController::class, 'StoreAbout'])->name('store.about');
+// EDIT
+Route::get('/about/edit/{id}',  [AboutController::class, 'EditAbout']);
+Route::post('/update/homeAbout/{id}',  [AboutController::class, 'UpdateAbout']);
+Route::get('/about/delete/{id}',  [AboutController::class, 'DeleteAbout']);
+
 // dashboard routes
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
@@ -74,3 +93,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     // $users = DB::table('users')->get();
     return view('admin.index');
 })->name('dashboard');
+
+// Multi Image Route
+Route::get('/user/logout',  [BrandsController::class, 'Logout'])->name('user.logout');
