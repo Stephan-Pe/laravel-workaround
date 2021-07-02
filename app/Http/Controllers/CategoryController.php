@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+
 use Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -102,8 +103,10 @@ class CategoryController extends Controller
         return Redirect()->back()->with('success', 'Category is restored');
     }
 
-     public function Destroy($id) {
+    public function Destroy($id) {
         $delete = Category::onlyTrashed()->find($id)->forceDelete();
         return Redirect()->back()->with('success', 'Category is permanently deleted');
     }
+
+  
 }

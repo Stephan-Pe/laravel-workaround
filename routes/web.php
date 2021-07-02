@@ -7,6 +7,7 @@ use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Models\User;
+use App\Models\Multipic;
 use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,8 @@ Route::get('/email/verify', function () {
 Route::get('/', function () {
     $brands = DB::table('brands')->get();
     $abouts = DB::table('home_abouts')->latest()->first();
-    return view('home', compact('brands', 'abouts'));
+    $images = Multipic::all();
+    return view('home', compact('brands', 'abouts', 'images'));
 });
 
 Route::get('/home', function () {
@@ -85,6 +87,19 @@ Route::post('/store/about',  [AboutController::class, 'StoreAbout'])->name('stor
 Route::get('/about/edit/{id}',  [AboutController::class, 'EditAbout']);
 Route::post('/update/homeAbout/{id}',  [AboutController::class, 'UpdateAbout']);
 Route::get('/about/delete/{id}',  [AboutController::class, 'DeleteAbout']);
+
+// Portfolio Route
+Route::get('/portfolio',  [AboutController::class, 'Portfolio'])->name('portfolio');
+// Admin contact page
+Route::get('/admin.contact',  [ContactController::class, 'AdminContact'])->name('admin.contact');
+Route::get('/admin/add/contact',  [ContactController::class, 'AdminAddContact'])->name('add.contact');
+Route::post('/admin/store/contact',  [ContactController::class, 'AdminStoreContact'])->name('store.contact');
+Route::get('/admin/message',  [ContactController::class, 'AdminMessage'])->name('admin.message');
+
+// home contact
+Route::get('/contact',  [ContactController::class, 'Contact'])->name('contact');
+Route::post('/contact/form',  [ContactController::class, 'ContactForm'])->name('contact.form');
+
 
 // dashboard routes
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

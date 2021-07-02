@@ -92,3 +92,27 @@ php artisan storage:link
 - set a link to storage folder where profile photo is located storage/app/public/profile-photos/
 
 - change APP_URL in .env to http://127.0.0.1:XXXX->(port you use) to let laravel find the photo
+
+## deploy app
+
+- export database
+
+- php artisan config:cache
+
+- php artisan cache:clear
+
+- php artisan view:clear
+
+- zip App folder
+
+- create database
+
+- import .sql file
+
+- unzip file into homeroute
+
+- delete bootstrap/cache/config.php
+
+- create .htaccess file on server and fill it with [githublink](https://gist.github.com/liaotzukai/8e61a3f6dd82c267e05270b505eb6d5a)
+
+- done :-)
